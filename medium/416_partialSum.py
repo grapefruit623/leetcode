@@ -23,7 +23,7 @@ class Solution(object):
         return self.knapsack(nums)
 
     '''
-        WA
+        AC
         Trying to using 0/1 knapsack progorm's concept
     '''
     def knapsack(self, nums):
