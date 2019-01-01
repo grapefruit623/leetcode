@@ -3,10 +3,9 @@
 import unittest
 
 class Solution(object):
-    def __init__(self):
-        self.ansCount = 0
-
     '''
+        Actually it is not dp!
+        Brute force
         TLE
     '''
     def findTargetSumWays_TLE(self, nums, S):
@@ -39,10 +38,42 @@ class Solution(object):
         return self.ansCount
 
     """
+        Dynamic programming
+        AC
+    """
+    def findTargetSumWays(self, nums, S):
+        """
+        :type nums: List[int]
+        :type S: int
+        :rtype int
+        """
+
+        if (len(nums) == 1):
+            if nums[0] == S or -1*nums[0] == S:
+                return 1
+
+        self.dp = []
+        for i in range(len(nums)):
+            self.dp.append(dict())
+
+        if nums[0] != 0:
+            self.dp[0][nums[0]] = 1 
+            self.dp[0][-nums[0]] = 1
+        else:
+            self.dp[0][0] = 2
+
+        for i in range(1, len(nums)):
+            for d in self.dp[i-1].keys():
+                self.dp[i][d+nums[i]] = self.dp[i].get(d+nums[i],0) + self.dp[i-1][d]
+                self.dp[i][d-nums[i]] = self.dp[i].get(d-nums[i],0) + self.dp[i-1][d]
+
+        return self.dp[len(nums)-1].get(S, 0)
+
+    """
         AC
         Cost 1 second to deal all test case in leetcode website.
     """
-    def findTargetSumWays(self, nums, S):
+    def findTargetSumWays_recursive(self, nums, S):
         """
         :type nums: List[int]
         :type S: int
@@ -77,6 +108,7 @@ class Unittest_findTargetSumWays(unittest.TestCase):
         expected = 5
         self.assertEqual(expected, self.sol.findTargetSumWays(nums, s))
 
+    '''
     def test_sample2(self):
         nums = [1]
         s = 1 
@@ -87,7 +119,7 @@ class Unittest_findTargetSumWays(unittest.TestCase):
         nums = [29,6,7,36,30,28,35,48,20,44,40,2,31,25,6,41,33,4,35,38]
         s = 35 
         expected = 0
-        self.assertEqual(expected, self.sol.findTargetSumWays_TLE(nums, s))
+        self.assertEqual(expected, self.sol.findTargetSumWays(nums, s))
 
     def test_sample4(self):
         nums = [42,24,30,14,38,27,12,29,43,42,5,18,0,1,12,44,45,50,21,47]
@@ -99,6 +131,12 @@ class Unittest_findTargetSumWays(unittest.TestCase):
         nums = [2,107,109,113,127,131,137,3,2,3,5,7,11,13,17,19,23,29,47,53]
         s = 2
         expected = 2790
+        self.assertEqual(expected, self.sol.findTargetSumWays(nums, s))
+    '''
+    def test_sample6(self):
+        nums = [0,0,0,0,0,0,0,0,1]
+        s = 1
+        expected = 256
         self.assertEqual(expected, self.sol.findTargetSumWays(nums, s))
 
 if __name__ == '__main__':
