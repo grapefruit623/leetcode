@@ -41,8 +41,18 @@ class Solution(object):
         
     """
         AC
+        Shorter and clearly solution
+        ref: https://leetcode.com/problems/wiggle-sort-ii/discuss/77678/3-lines-Python-with-Explanation-Proof
     """
     def wiggleSort(self, nums):
+        nums.sort()
+        halfLen = len(nums[::2])
+        nums[::2], nums[1::2] = nums[halfLen-1::-1], nums[:halfLen-1:-1]
+
+    """
+        AC
+    """
+    def wiggleSort_ac(self, nums):
         """
         :type nums: List[int]
         :rtype void Do not return anything, modify nums in-place instead.
@@ -96,7 +106,6 @@ class Unittest_wiggleSort(unittest.TestCase):
         nums = [1,2,2,1,2,1,1,1,2,2,1,2,1,2,1,1,2]
         self.sol.wiggleSort(nums)
         self.assertFailAns(nums)
-
 
     def assertFailAns(self, nums):
         numLen = len(nums)
