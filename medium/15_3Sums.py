@@ -1,5 +1,6 @@
 #! -*- coding: utf-8 -*-
 import unittest
+from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
