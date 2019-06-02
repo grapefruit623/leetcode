@@ -22,6 +22,7 @@ class Solution:
                 else:
                     if len(p) > len(ans):
                         ans = p
+
         return ans
 
     def findPartialPalindromic(self, s, start, end):
@@ -114,5 +115,10 @@ class Unittest_longestPalindrome(unittest.TestCase):
         expected = "bcb" 
         self.assertEqual(expected, self.sol.longestPalindrome(data))
 
+    def test_case10(self):
+        data = "abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababa"
+
+        expected = ""
+        self.assertEqual(expected, self.sol.longestPalindrome(data))
 if __name__ == '__main__':
     unittest.main()
