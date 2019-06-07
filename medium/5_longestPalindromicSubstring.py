@@ -4,9 +4,44 @@ import math
 
 class Solution:
     '''
-        TLE
+        DP
     '''
     def longestPalindrome(self, s:str)->str:
+        if s == None:
+            return None
+
+        if s == '':
+            return ''
+
+        dp = []
+        l = len(s)
+        for i in range(l):
+            dp.append([False]*l)
+            dp[i][i] = True
+
+        ans = s[0] 
+        maxLen = 1
+        for i in range(l-1, -1, -1):
+            for j in range(l-1, i, -1):
+                if s[i] != s[j]:
+                    dp[i][j] = False
+                else:
+                    if j-i > 1:
+                        if dp[i+1][j-1] == True:
+                            dp[i][j] = True
+                            if j-i+1 > maxLen:
+                                ans = s[i:j+1]
+                                maxLen = len(ans)
+                    else:
+                        dp[i][j] = True
+                        if j-i+1 > maxLen:
+                            ans = s[i:j+1]
+                            maxLen = len(ans)
+        return ans
+    '''
+        TLE
+    '''
+    def longestPalindrome_TLE(self, s:str)->str:
         if s is None:
             return None
 
@@ -15,11 +50,14 @@ class Solution:
             return s
 
         ans = ''
+        maxLen = 0
         for i in range(0, length):
             for j in range(i+1, length):
                 p = self.findPartialPalindromic(s, i, j)
-                if len(p) > len(ans):
+                currLen = len(p)
+                if currLen > maxLen:
                     ans = p
+                    maxLen = currLen
 
         return ans
 
@@ -59,7 +97,7 @@ class Unittest_longestPalindrome(unittest.TestCase):
 
     def test_case3(self):
         data = "babad"
-        expected = "bab"
+        expected = "aba"
         self.assertEqual(expected, self.sol.longestPalindrome(data))
 
     def test_case4(self):
@@ -92,12 +130,21 @@ class Unittest_longestPalindrome(unittest.TestCase):
         expected = "bcb" 
         self.assertEqual(expected, self.sol.longestPalindrome(data))
 
-    '''
     def test_case10(self):
         data = "abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababa"
 
-        expected = ""
+        expected = "I don't know correct answear"
         self.assertEqual(expected, self.sol.longestPalindrome(data))
-    '''
+
+    def test_case11(self):
+        data = "abcda"
+        expected = "a"
+        self.assertEqual(expected, self.sol.longestPalindrome(data))
+
+    def test_case11(self):
+        data = "aaaa"
+        expected = "aaaa"
+        self.assertEqual(expected, self.sol.longestPalindrome(data))
+
 if __name__ == '__main__':
     unittest.main()
