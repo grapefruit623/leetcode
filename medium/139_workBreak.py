@@ -5,6 +5,7 @@ from typing import List
 class Solution:
     '''
         Travel and prune
+        Not DP!!
         AC
     '''
     def wordBreak(self, s: str, wordDict: List[str])->bool:
