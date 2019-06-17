@@ -4,11 +4,42 @@ from typing import List
 
 class Solution:
     '''
+        DP
+        AC!
+    '''
+    def wordBreak(self, s: str, wordDict: List[str])->bool:
+        strLen = len(s)
+        dp = [False]*(strLen+1)
+
+        # basic point
+        dp[0] = True
+
+        for j in range(strLen+1):
+            for i in range(j):
+                if s[i:j] in wordDict:
+                    '''
+                        total str is
+                               i      j
+                               |      |
+                               V      V
+                        xxxxxx i **** j ?????? 
+
+                          If dp[i] == True, prefix substring xxxxxx
+                        can be split to words in wordDict.
+
+                          Set dp[i+len(s[i:j])] == True
+                        which means that i **** j is a word and
+                        xxxxxx i **** j is valid string
+                    '''
+                    if dp[i] == True:
+                        dp[i+len(s[i:j])] = True
+        return dp[-1]
+    '''
         Travel and prune
         Not DP!!
         AC
     '''
-    def wordBreak(self, s: str, wordDict: List[str])->bool:
+    def wordBreak_ac(self, s: str, wordDict: List[str])->bool:
         l = len(s)
         self.dp = []
         for d in range(l):
@@ -110,6 +141,12 @@ class unittest_wordBreak(unittest.TestCase):
     def setUp(self):
         self.sol = Solution()
 
+    def test_sample2(self):
+        s = "applepenapple"
+        wordDict = {"apple", "pen"}
+        expected = True
+        self.assertEqual(expected, self.sol.wordBreak(s, wordDict))
+
     def test_special(self):
         s = 'a'
         wordDict = ['a']
@@ -128,11 +165,6 @@ class unittest_wordBreak(unittest.TestCase):
         expected = True
         self.assertEqual(expected, self.sol.wordBreak(s, wordDict))
     
-    def test_sample2(self):
-        s = "applepenapple"
-        wordDict = {"apple", "pen"}
-        expected = True
-        self.assertEqual(expected, self.sol.wordBreak(s, wordDict))
 
     def test_sample3(self):
         s = "catsandog"
