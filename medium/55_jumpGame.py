@@ -6,8 +6,72 @@ class Solution:
     def canJump(self, nums:List[int])->bool:
         if nums == []:
             return False
-        return self.greedyMoveVer2(nums)
+        return self.greedyMoveVer3(nums)
 
+    '''
+        More clearer and faster solution and doesn't
+        use extra memory to record visted position.
+        AC
+    '''
+    def greedyMoveVer3(self, nums):
+        i = j = 0
+        l = len(nums)
+        '''
+            Explains solution by graph
+
+            --------------------------------------------------
+
+            Position i can not cross over position j
+            **i*X*****j************
+                ^  
+                |      
+                i+num[i] 
+
+            --------------------------------------------------
+
+            Position i can cross over position j
+            *******i**j************
+                            ^  
+                            |      
+                            i+num[i] 
+
+            Set position j to be farest position j'
+                      ______
+                      ^     |
+                      |     V
+            *******i**j*****j'******
+                            ^  
+                            |      
+                            i+num[i] 
+
+            --------------------------------------------------
+
+            There is a position i can reach final destination
+
+            *******************i**j
+                                    ^  
+                                    |      
+                                    i+num[i] 
+            --------------------------------------------------
+
+            There is no positions before position j can cross over
+            it, which means no way to final destination!!
+
+            ********ji*************
+
+            --------------------------------------------------
+        '''
+        while j < l:
+            if i > j:
+                return False
+            else:
+                j = max(j, i+nums[i])
+
+            if j >= l-1:
+                return True
+            i += 1
+
+        return True
     '''
         AC
     '''
