@@ -35,7 +35,7 @@ class Solution:
                             |      
                             i+num[i] 
 
-            Set position j to be farest position j'
+            Set position j to be farthest position j'
                       ______
                       ^     |
                       |     V
