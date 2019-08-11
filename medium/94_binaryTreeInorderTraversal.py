@@ -11,9 +11,36 @@ class TreeNode:
 class Solution:
     '''
         AC
-        Iterative solution
+        Morris traversal and Threaded binary treea solution.
+        ref: leetcode's solution.
     '''
     def inorderTraversal(self, root: TreeNode)->List[int]:
+        currNode = root
+        prevNode = TreeNode('p')
+        prevNode.right = currNode
+        ans = []
+
+        while currNode != None:
+            if currNode.left == None:
+                ans.append(currNode.val)
+                prevNode = currNode
+                currNode = currNode.right
+            else:
+                leftChild = currNode.left
+                while leftChild.right != None:
+                    leftChild = leftChild.right
+
+                prevNode.right = currNode.left
+                currNode.left = None
+                leftChild.right = currNode
+                currNode = prevNode.right
+        return ans
+
+    '''
+        AC
+        Iterative solution
+    '''
+    def Iterative_inorderTraversal(self, root: TreeNode)->List[int]:
         ans = []
         stack = []
         
