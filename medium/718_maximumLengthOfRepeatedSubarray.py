@@ -20,14 +20,11 @@ class Solution:
         for i in range(lenA+1):
             dp.append([0]*(lenB+1))
 
-        ans = -1    
-
         for i in range(1,lenA+1):
             for j in range(1,lenB+1):
                 if A[i-1] == B[j-1]:
-                    dp[i][j] = max(dp[i-1][j-1]+1, 1)
-                ans = max(ans, dp[i][j])
-        return ans
+                    dp[i][j] = dp[i-1][j-1]+1
+        return max(max(row) for row in dp)
 
 class Unittest_findLength(unittest.TestCase):
     def setUp(self):
