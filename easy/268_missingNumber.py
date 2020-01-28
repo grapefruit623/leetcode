@@ -6,8 +6,21 @@ from typing import List
 class Solution:
     '''
         AC
+        Inspired by 
+        https://leetcode.com/problems/missing-number/discuss/492166/Arithmetic-Series-C%2B%2B-Beats-95.
     '''
     def missingNumber(self, num: List[int])->int:
+        n = len(num) 
+        originSum = int((n*(n+1))/2)
+        diffSum = sum(num)
+        diff = originSum - diffSum
+
+        return diff
+
+    '''
+        AC
+    '''
+    def missingNumber_ac(self, num: List[int])->int:
         num = sorted(num)
         l = len(num)
 
