@@ -3,7 +3,35 @@ import unittest
 from typing import List
 
 class Solution:
+
+    '''
+        Ref: https://www.cnblogs.com/grandyang/p/4997417.html
+             https://soulmachine.gitbooks.io/algorithm-essentials/java/dp/best-time-to-buy-and-sell-stock-with-cooldown.html
+    '''
     def maxProfit(self, prices: List[int])->int:
+        n = len(prices)
+        if n <= 1:
+            return 0
+        sell = [ 0 for i in range(n) ]
+        buy = [0 for i in range(n) ]
+
+        buy[0] = -prices[0]
+
+        for i in range(1, n):
+            sell[i] = max(sell[i-1], buy[i-1]+prices[i])
+
+            if i == 1:
+                buy[i] = max(buy[i-1], -prices[i])
+            else:
+                buy[i] = max(buy[i-1], sell[i-2]-prices[i])
+
+        return sell[n-1]
+
+
+    '''
+        AC but slowly
+    '''
+    def maxProfit_ac(self, prices: List[int])->int:
         n = len(prices)
 
         if n <= 1:
