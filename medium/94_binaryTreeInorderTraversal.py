@@ -11,33 +11,6 @@ class TreeNode:
 class Solution:
     '''
         AC
-        Morris traversal and Threaded binary treea solution.
-        ref: leetcode's solution.
-    '''
-    def inorderTraversal(self, root: TreeNode)->List[int]:
-        currNode = root
-        prevNode = TreeNode('p')
-        prevNode.right = currNode
-        ans = []
-
-        while currNode != None:
-            if currNode.left == None:
-                ans.append(currNode.val)
-                prevNode = currNode
-                currNode = currNode.right
-            else:
-                leftChild = currNode.left
-                while leftChild.right != None:
-                    leftChild = leftChild.right
-
-                prevNode.right = currNode.left
-                currNode.left = None
-                leftChild.right = currNode
-                currNode = prevNode.right
-        return ans
-
-    '''
-        AC
         Iterative solution
     '''
     def Iterative_inorderTraversal(self, root: TreeNode)->List[int]:
@@ -75,11 +48,11 @@ class Unittest_inorderTraversal(unittest.TestCase):
         rightNode = TreeNode(2)
         rightNode.left = TreeNode(3)
         root.right = rightNode
-        self.assertEqual([1,3,2], self.sol.inorderTraversal(root))
+        self.assertEqual([1,3,2], self.sol.Iterative_inorderTraversal(root))
 
     def test_sample2(self):
         root = None
-        self.assertEqual([], self.sol.inorderTraversal(root))
+        self.assertEqual([], self.sol.Iterative_inorderTraversal(root))
 
     def test_sample3(self):
         root = TreeNode(1)
@@ -97,7 +70,7 @@ class Unittest_inorderTraversal(unittest.TestCase):
         rlTree.right = TreeNode(9)
 
         root.right.left = rlTree
-        self.assertEqual([4,2,7,5,8,1,6,9,3], self.sol.inorderTraversal(root))
+        self.assertEqual([4,2,7,5,8,1,6,9,3], self.sol.Iterative_inorderTraversal(root))
     
 if __name__ == '__main__':
     unittest.main()
