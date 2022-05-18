@@ -4,7 +4,7 @@ import unittest
 from typing import List
 
 class Solution:
-    def generateParentheses(self, n:int)->List[str]:
+    def generateParenthesis(self, n:int)->List[str]:
         leftRemainCount=n
         rightRemainCount=n
         self.ans=[]
@@ -20,7 +20,6 @@ class Solution:
 
         if l == 0 and r == 0:
             a="".join(self.currentPar)
-            print ('a: ', a)
             self.ans.append(a)
 
         if l > 0:
@@ -40,7 +39,7 @@ class Unittest(unittest.TestCase):
     def test_case1(self):
         inp=3
         expect=["((()))","(()())","(())()","()(())","()()()"]
-        self.assertEqual(expect, self.sol.generateParentheses(inp))
+        self.assertEqual(expect, self.sol.generateParenthesis(inp))
 
 if __name__ == "__main__":
     unittest.main()
