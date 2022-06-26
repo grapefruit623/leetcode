@@ -2,6 +2,38 @@
 import time
 
 class Solution(object):
+    '''
+        TLE
+    '''
+    def canPartition_recursive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        s = sum(nums)
+        l = len(nums)
+
+        if s % 2 != 0:
+            return False
+
+        partialSum = s/2
+
+        return self.helper(partialSum, 0, 0, nums, l)
+
+    def helper(self, ps, currentSum, index, nums, l):
+        if ps == currentSum:
+            return True
+
+        for i in range(index, l):
+            currentSum += nums[i]
+            isFindPartial = self.helper(ps, currentSum, i+1, nums, l)
+
+            if isFindPartial:
+                return True
+            currentSum -= nums[i]
+
+        return False
+
     def canPartition(self, nums):
         """
         :type nums List[int]
