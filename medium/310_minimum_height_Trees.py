@@ -4,7 +4,132 @@ import unittest
 from typing import List
 
 class Solution:
+    '''
+        AC more faster and my style
+    '''
     def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        directGraph = { i:[] for i in range(n)}
+
+        '''
+            Adjanency matrix
+        '''
+        for e in edges:
+            directGraph[ e[0] ].append(e[1])
+            directGraph[ e[1] ].append(e[0])
+
+        '''
+            Use Topological sort
+        '''
+
+        leaveNode = []
+
+        while len(directGraph) > 2:# Because there can be two roots have same height
+            '''
+                First time
+            '''
+            if leaveNode == []:
+                for node in directGraph.keys():
+                    '''
+                        Only one connection means leaf
+                    '''
+                    if len(directGraph[node]) == 1:
+                        leaveNode.append(node)
+
+            nextLeaveNode = []
+            for lNode in leaveNode:
+                parentNode = directGraph[lNode][0]
+                directGraph[parentNode].remove(lNode)
+                directGraph.pop(lNode)
+
+                if len(directGraph[parentNode]) == 1:
+                    nextLeaveNode.append(parentNode)
+
+
+            leaveNode = nextLeaveNode
+
+        return [ node for node in directGraph ]
+
+    '''
+        AC, but slowly
+    '''
+    def findMinHeightTrees_slow(self, n: int, edges: List[List[int]]) -> List[int]:
+
+        directGraph = { i:[] for i in range(n)}
+        
+        '''
+            Adjanency matrix
+        '''
+        for e in edges:
+            directGraph[ e[0] ].append(e[1])
+            directGraph[ e[1] ].append(e[0])
+        
+        '''
+            Use Topological sort
+        '''
+        
+        leaveNode = []
+        
+        for i in range(n):
+            '''
+                Only one connection means leaf
+            '''
+            if i in directGraph.keys() and len(directGraph[i]) == 1:
+                leaveNode.append(i)
+        
+        while len(directGraph) > 2:# Because there can be two roots have same height
+            nextLeave = []
+            for lNode in leaveNode:
+                parentNode = directGraph[lNode][0]
+                directGraph[parentNode].remove(lNode)
+                directGraph.pop(lNode)
+                '''
+                    The node which connect to leaf will become next generation of leaves when leaf node removed.
+                '''
+                if parentNode not in nextLeave and len(directGraph[parentNode]) == 1:
+                    nextLeave.append(parentNode)
+
+            
+            leaveNode = nextLeave
+            
+        return [ node for node in directGraph ]
+
+    def findMinHeightTrees_tle2(self, n: int, edges: List[List[int]]) -> List[int]:
+        directGraph = { i:[] for i in range(n)}
+
+        '''
+            Adjanency matrix
+        '''
+        for e in edges:
+            directGraph[ e[0] ].append(e[1])
+            directGraph[ e[1] ].append(e[0])
+
+        '''
+            Use Topological sort
+        '''
+
+        leaveNode = []
+
+        while len(directGraph) > 2:# Because there can be two roots have same height
+            for i in range(n):
+                '''
+                    Only one connection means leaf
+                '''
+                if i in directGraph.keys() and len(directGraph[i]) == 1:
+                    leaveNode.append(i)
+
+
+            for lNode in leaveNode:
+                parentNode = directGraph[lNode][0]
+                directGraph[parentNode].remove(lNode)
+                directGraph.pop(lNode)
+
+
+            leaveNode = []
+
+        return [ node for node in directGraph ]
+
+
+    def findMinHeightTrees_tle1(self, n: int, edges: List[List[int]]) -> List[int]:
         '''
             Store n node with height
         '''
